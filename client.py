@@ -37,3 +37,4 @@ class RSClient:
             raise ConnectionError("not connected. Connect First")
         else:
             self.conn.close()
+            log.info("Closed Redshift Connection")
