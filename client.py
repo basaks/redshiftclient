@@ -2,6 +2,7 @@ import logging
 import json
 import sqlalchemy
 from sqlalchemy.engine.url import URL
+import pandas as pd
 
 log = logging.getLogger(__name__)
 
@@ -38,3 +39,9 @@ class RSClient:
         else:
             self.conn.close()
             log.info("Closed Redshift Connection")
+
+    def extract(self, sql: str) -> pd.DataFrame:
+        if self.conn is None:
+            raise ConnectionError("Not connected! Connect first!!")
+        results = pd.read_sql(sql, self.conn)
+        return results
